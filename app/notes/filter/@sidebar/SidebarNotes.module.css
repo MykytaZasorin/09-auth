@@ -1,0 +1,37 @@
+.sidebarContainer {
+  width: 260px;
+  max-width: 200px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  background-color: #1e1e1e;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  border-right: 1px solid #333;
+}
+
+.menuList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuItem {
+  margin-bottom: 8px;
+}
+
+.menuLink {
+  text-decoration: none;
+  color: #b5b5b5;
+  font-size: 16px;
+  display: block;
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.menuLink:hover {
+  background-color: #333333;
+  color: white;
+}

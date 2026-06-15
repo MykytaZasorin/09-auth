@@ -1,0 +1,32 @@
+.header {
+  margin-bottom: 16px;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.topBar button {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.topBar > * {
+  flex-shrink: 0;
+}
+
+.centeredLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0070f3;
+}

@@ -1,0 +1,19 @@
+/* Дозволяємо модулю безпечно стилізувати глобальні теги html та body */
+:global(html),
+:global(body) {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Наш локальний клас для body */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Локальний клас для main, який штовхає футер донизу */
+.main-content {
+  flex: 1 0 auto;
+}
