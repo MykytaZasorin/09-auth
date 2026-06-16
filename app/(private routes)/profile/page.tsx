@@ -3,8 +3,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getMe } from "@/lib/api/serverApi";
-import css from "./profile.module.css";
-
+import css from "./ProfilePage.module.css";
+// фикс
 export const metadata: Metadata = {
   title: "User Profile - NoteHub",
   description: "View and manage your NoteHub personal profile details.",
