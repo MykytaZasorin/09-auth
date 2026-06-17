@@ -34,7 +34,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
     setSearch(value);
   }, 500);
 
-  const apiTag = currentTagString === "all" ? undefined : currentTagString;
+  const apiTag = currentTagString === "all" ? "" : currentTagString;
 
   const { data, isLoading, isError } = useQuery<FetchNotesResponse>({
     queryKey: ["notes", page, search, apiTag],

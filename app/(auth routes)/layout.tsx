@@ -1,10 +1,19 @@
-import { FC, ReactNode } from "react";
+"use client";
+
+import { FC, ReactNode, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface AuthLayoutProps {
   children: ReactNode;
 }
 
-export const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
+const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
+
   return <>{children}</>;
 };
 

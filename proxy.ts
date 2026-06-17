@@ -1,30 +1,54 @@
+// proxy.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { checkSession } from "./lib/api/serverApi";
 
 const privateRoutes = ["/profile", "/notes"];
-
 const publicRoutes = ["/sign-in", "/sign-up"];
 
-export function proxy(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const hasSession =
-    request.cookies.has("session") ||
-    request.cookies.has("auth-token") ||
-    request.cookies.has("token");
+  const accessToken = request.cookies.get("accessToken")?.value;
+  const refreshToken = request.cookies.get("refreshToken")?.value;
+
+  let isAuth = !!accessToken;
+
+  if (!isAuth && refreshToken) {
+    try {
+      const sessionResponse = await checkSession();
+
+      if (sessionResponse && sessionResponse.data) {
+        isAuth = true;
+
+        const setCookieHeader = sessionResponse.headers["set-cookie"];
+        if (setCookieHeader) {
+          const response = NextResponse.next();
+          response.headers.set("set-cookie", String(setCookieHeader));
+
+          if (privateRoutes.some((route) => pathname.startsWith(route))) {
+            return response;
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Помилка перевірки сесії у проксі:", error);
+      isAuth = false;
+    }
+  }
 
   const isPrivateRoute = privateRoutes.some((route) =>
     pathname.startsWith(route),
   );
-  if (isPrivateRoute && !hasSession) {
+  if (isPrivateRoute && !isAuth) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
   const isPublicRoute = publicRoutes.some((route) =>
     pathname.startsWith(route),
   );
-  if (isPublicRoute && hasSession) {
-    return NextResponse.redirect(new URL("/profile", request.url));
+  if (isPublicRoute && isAuth) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();
