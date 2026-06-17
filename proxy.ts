@@ -5,7 +5,7 @@ const privateRoutes = ["/profile", "/notes"];
 
 const publicRoutes = ["/sign-in", "/sign-up"];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const hasSession =
